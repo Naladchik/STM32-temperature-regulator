@@ -1,0 +1,320 @@
+###############################################################################
+#
+# IAR ELF Linker V7.50.2.10312/W32 for ARM                30/Dec/2018  23:21:11
+# Copyright 2007-2015 IAR Systems AB.
+#
+#    Output file  =  D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Exe\c.out
+#    Map file     =  D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\List\c.map
+#    Command line =  
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\main.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\startup_stm32f0xx.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_adc.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_cec.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_comp.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_crc.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_dac.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_dbgmcu.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_dma.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_exti.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_flash.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_gpio.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_i2c.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_iwdg.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_misc.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_pwr.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_rcc.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_rtc.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_spi.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_syscfg.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_tim.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_usart.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_wwdg.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\system_stm32f0xx.o
+#        -o D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Exe\c.out
+#        --redirect _Printf=_PrintfFull --redirect _Scanf=_ScanfFull --map
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\List\c.map --config
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        7.3\arm\config\linker\ST\stm32f030x6.icf" --semihosting --entry
+#        __iar_program_start --vfe
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at 0x08000000 { ro section .intvec };
+"P1":  place in [from 0x08000000 to 0x08007fff] { ro };
+"P2":  place in [from 0x20000000 to 0x20000fff] { rw, block CSTACK, block HEAP };
+
+  Section            Kind        Address   Size  Object
+  -------            ----        -------   ----  ------
+"A1":                                      0xc0
+  .intvec            ro code  0x08000000   0xc0  startup_stm32f0xx.o [1]
+                            - 0x080000c0   0xc0
+
+"P1":                                     0xf02
+  .text              ro code  0x080000c0  0x4f0  main.o [1]
+  .text              ro code  0x080005b0   0xe6  stm32f0xx_gpio.o [1]
+  .text              ro code  0x08000696    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000698  0x1a6  stm32f0xx_tim.o [1]
+  .text              ro code  0x0800083e   0xc2  DblDiv.o [4]
+  .text              ro code  0x08000900   0x2e  DblToI32.o [4]
+  .text              ro code  0x0800092e    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000930   0x20  I32ToDbl.o [4]
+  .text              ro code  0x08000950  0x1b4  DblAddSub.o [4]
+  .text              ro code  0x08000b04  0x184  DblMul.o [4]
+  .text              ro code  0x08000c88   0x32  DblCmpLe.o [4]
+  .text              ro code  0x08000cba    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000cbc   0x90  stm32f0xx_rcc.o [1]
+  .text              ro code  0x08000d4c  0x114  system_stm32f0xx.o [1]
+  .text              ro code  0x08000e60   0x3c  zero_init3.o [5]
+  .text              ro code  0x08000e9c   0x30  copy_init3.o [5]
+  .text              ro code  0x08000ecc   0x28  data_init.o [5]
+  .iar.init_table    const    0x08000ef4   0x24  - Linker created -
+  .text              ro code  0x08000f18   0x1a  cmain.o [5]
+  .text              ro code  0x08000f32    0x4  low_level_init.o [3]
+  .text              ro code  0x08000f36    0x8  exit.o [3]
+  .text              ro code  0x08000f3e    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f40    0xa  cexit.o [5]
+  .text              ro code  0x08000f4a    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f4c   0x14  exit.o [6]
+  .text              ro code  0x08000f60   0x10  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f70    0xc  cstartup_M.o [5]
+  Initializer bytes  const    0x08000f7c    0xc  <for P2-1>
+  .text              ro code  0x08000f88    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f8a    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f8c    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f8e    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f90    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f92    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f94    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f96    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f98    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f9a    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f9c    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000f9e    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fa0    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fa2    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fa4    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fa6    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fa8    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000faa    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fac    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fae    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fb0    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fb2    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fb4    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fb6    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fb8    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fba    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fbc    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fbe    0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000fc0    0x2  startup_stm32f0xx.o [1]
+  .rodata            const    0x08000fc2    0x0  zero_init3.o [5]
+  .rodata            const    0x08000fc2    0x0  copy_init3.o [5]
+                            - 0x08000fc2  0xf02
+
+"P2", part 1 of 3:                          0xc
+  P2-1                        0x20000000    0xc  <Init block>
+    .data            inited   0x20000000    0x8  main.o [1]
+    .data            inited   0x20000008    0x4  main.o [1]
+                            - 0x2000000c    0xc
+
+"P2", part 2 of 3:                        0x400
+  CSTACK                      0x20000010  0x400  <Block>
+    CSTACK           uninit   0x20000010  0x400  <Block tail>
+                            - 0x20000410  0x400
+
+"P2", part 3 of 3:                         0x54
+  .bss               zero     0x20000410    0xc  main.o [1]
+  .bss               zero     0x2000041c    0xc  main.o [1]
+  .bss               zero     0x20000428    0xc  main.o [1]
+  .bss               zero     0x20000434    0x8  main.o [1]
+  .bss               zero     0x2000043c    0x8  main.o [1]
+  .bss               zero     0x20000444    0x4  main.o [1]
+  .bss               zero     0x20000448    0x8  main.o [1]
+  .bss               zero     0x20000450    0x8  main.o [1]
+  .bss               zero     0x20000458    0x4  main.o [1]
+  .bss               zero     0x2000045c    0x4  main.o [1]
+  .bss               zero     0x20000460    0x1  main.o [1]
+                            - 0x20000461   0x51
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x51:
+          0x20000410  0x51
+
+Copy (__iar_copy_init3)
+    1 source range, total size 0xc:
+          0x08000f7c   0xc
+    1 destination range, total size 0xc:
+          0x20000000   0xc
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module               ro code  ro data  rw data
+    ------               -------  -------  -------
+D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj: [1]
+    main.o                 1 264       12       93
+    startup_stm32f0xx.o      276
+    stm32f0xx_gpio.o         230
+    stm32f0xx_rcc.o          144
+    stm32f0xx_tim.o          422
+    system_stm32f0xx.o       276
+    ----------------------------------------------
+    Total:                 2 612       12       93
+
+command line: [2]
+    ----------------------------------------------
+    Total:
+
+dl6M_tln.a: [3]
+    exit.o                     8
+    low_level_init.o           4
+    ----------------------------------------------
+    Total:                    12
+
+m6M_tl.a: [4]
+    DblAddSub.o              436
+    DblCmpLe.o                50
+    DblDiv.o                 194
+    DblMul.o                 388
+    DblToI32.o                46
+    I32ToDbl.o                32
+    ----------------------------------------------
+    Total:                 1 146
+
+rt6M_tl.a: [5]
+    cexit.o                   10
+    cmain.o                   26
+    copy_init3.o              48
+    cstartup_M.o              12
+    data_init.o               40
+    zero_init3.o              60
+    ----------------------------------------------
+    Total:                   196
+
+shb_l.a: [6]
+    exit.o                    20
+    ----------------------------------------------
+    Total:                    20
+
+    Linker created                     36    1 024
+--------------------------------------------------
+    Grand Total:           3 986       48    1 117
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+.iar.init_table$$Base   0x08000ef4          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x08000f18          --   Gb  - Linker created -
+?main                   0x08000f19         Code  Gb  cmain.o [5]
+CSTACK$$Base            0x20000010          --   Gb  - Linker created -
+CSTACK$$Limit           0x20000410          --   Gb  - Linker created -
+Delay_us                0x0800050f   0x26  Code  Gb  main.o [1]
+GPIO_1wire_InitStruct   0x2000043c    0x8  Data  Gb  main.o [1]
+GPIO_Init               0x080005b1   0xbe  Code  Gb  stm32f0xx_gpio.o [1]
+GPIO_InitStruct         0x20000434    0x8  Data  Gb  main.o [1]
+GPIO_ReadInputDataBit   0x0800066f   0x1e  Code  Gb  stm32f0xx_gpio.o [1]
+GPIO_ResetBits          0x08000693    0x4  Code  Gb  stm32f0xx_gpio.o [1]
+GPIO_SetBits            0x0800068d    0x6  Code  Gb  stm32f0xx_gpio.o [1]
+GetTemperature          0x08000551   0x48  Code  Gb  main.o [1]
+HeatRatio               0x20000008    0x4  Data  Gb  main.o [1]
+MasterResetPresence     0x080003a5   0x94  Code  Gb  main.o [1]
+MySystemInit            0x08000227   0xec  Code  Gb  main.o [1]
+OneWireInput            0x08000333   0x2e  Code  Gb  main.o [1]
+OneWireOutput           0x08000361   0x2e  Code  Gb  main.o [1]
+OneWirePull             0x08000323   0x10  Code  Gb  main.o [1]
+OneWireRelease          0x08000313   0x10  Code  Gb  main.o [1]
+PID_buf                 0x20000450    0x8  Data  Gb  main.o [1]
+RCC_AHBPeriphClockCmd   0x08000cbd   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB1PeriphClockCmd  0x08000cdd   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB1PeriphResetCmd  0x08000d1d   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB2PeriphResetCmd  0x08000cfd   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+ReadByte                0x080004b3   0x5c  Code  Gb  main.o [1]
+Region$$Table$$Base     0x08000ef4          --   Gb  - Linker created -
+Region$$Table$$Limit    0x08000f18          --   Gb  - Linker created -
+SetSysClock             0x08000dbb   0x76  Code  Lc  system_stm32f0xx.o [1]
+StartConvertion         0x08000539   0x18  Code  Gb  main.o [1]
+SystemInit              0x08000d4d   0x6e  Code  Gb  system_stm32f0xx.o [1]
+TIM14_TimeBaseInitStruct
+                        0x2000041c    0xc  Data  Gb  main.o [1]
+TIM14_period            0x2000045c    0x4  Data  Gb  main.o [1]
+TIM3_TimeBaseInitStruct
+                        0x20000410    0xc  Data  Gb  main.o [1]
+TIM_ClearFlag           0x08000837    0x8  Code  Gb  stm32f0xx_tim.o [1]
+TIM_Cmd                 0x080007d9   0x1c  Code  Gb  stm32f0xx_tim.o [1]
+TIM_DeInit              0x08000699   0xda  Code  Gb  stm32f0xx_tim.o [1]
+TIM_GetFlagStatus       0x0800081d   0x1a  Code  Gb  stm32f0xx_tim.o [1]
+TIM_TimeBaseInit        0x08000773   0x66  Code  Gb  stm32f0xx_tim.o [1]
+TempActValue            0x20000458    0x4  Data  Gb  main.o [1]
+TempSPValue             0x20000444    0x4  Data  Gb  main.o [1]
+TempSetpoint            0x20000000    0x8  Data  Gb  main.o [1]
+TimeCounter             0x20000460    0x1  Data  Gb  main.o [1]
+WriteByte               0x08000465   0x4e  Code  Gb  main.o [1]
+__ICFEDIT_region_RAM_end__ {Abs}
+                        0x20000fff          --   Gb  command line/config [2]
+__ICFEDIT_region_RAM_start__ {Abs}
+                        0x20000000          --   Gb  command line/config [2]
+__aeabi_cdcmple         0x08000c89         Code  Gb  DblCmpLe.o [4]
+__aeabi_d2uiz           0x08000901         Code  Gb  DblToI32.o [4]
+__aeabi_dadd            0x08000951         Code  Gb  DblAddSub.o [4]
+__aeabi_ddiv            0x0800083f         Code  Gb  DblDiv.o [4]
+__aeabi_dmul            0x08000b05         Code  Gb  DblMul.o [4]
+__aeabi_dsub            0x08000a17         Code  Gb  DblAddSub.o [4]
+__aeabi_ui2d            0x08000931         Code  Gb  I32ToDbl.o [4]
+__cmain                 0x08000f19         Code  Gb  cmain.o [5]
+__exit                  0x08000f4d   0x14  Code  Gb  exit.o [6]
+__iar_copy_init3        0x08000e9d   0x30  Code  Gb  copy_init3.o [5]
+__iar_d2uiz             0x08000905         Code  Gb  DblToI32.o [4]
+__iar_data_init3        0x08000ecd   0x28  Code  Gb  data_init.o [5]
+__iar_program_start     0x08000f71         Code  Gb  cstartup_M.o [5]
+__iar_ui2d              0x08000935         Code  Gb  I32ToDbl.o [4]
+__iar_zero_init3        0x08000e61   0x3c  Code  Gb  zero_init3.o [5]
+__low_level_init        0x08000f33    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x08000000         Data  Gb  startup_stm32f0xx.o [1]
+_call_main              0x08000f25         Code  Gb  cmain.o [5]
+_exit                   0x08000f41         Code  Gb  cexit.o [5]
+_main                   0x08000f2f         Code  Gb  cmain.o [5]
+a                       0x20000428    0xc  Data  Gb  main.o [1]
+e                       0x20000448    0x8  Data  Gb  main.o [1]
+exit                    0x08000f37    0x8  Code  Gb  exit.o [3]
+main                    0x080000c1  0x166  Code  Gb  main.o [1]
+
+
+[1] = D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj
+[2] = command line
+[3] = dl6M_tln.a
+[4] = m6M_tl.a
+[5] = rt6M_tl.a
+[6] = shb_l.a
+
+  3 986 bytes of readonly  code memory
+     48 bytes of readonly  data memory
+  1 117 bytes of readwrite data memory
+
+Errors: none
+Warnings: none
