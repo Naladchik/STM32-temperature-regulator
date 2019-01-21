@@ -1,12 +1,15 @@
 ###############################################################################
 #
-# IAR ELF Linker V7.50.2.10312/W32 for ARM                30/Dec/2018  23:21:11
+# IAR ELF Linker V7.50.2.10312/W32 for ARM                21/Jan/2019  13:32:00
 # Copyright 2007-2015 IAR Systems AB.
 #
 #    Output file  =  D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Exe\c.out
 #    Map file     =  D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\List\c.map
 #    Command line =  
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\interrupts.o
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\main.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\periphery.o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\PIcontrol.o
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\startup_stm32f0xx.o
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_adc.o
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_cec.o
@@ -30,8 +33,9 @@
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_usart.o
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\stm32f0xx_wwdg.o
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\system_stm32f0xx.o
-#        -o D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Exe\c.out
-#        --redirect _Printf=_PrintfFull --redirect _Scanf=_ScanfFull --map
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj\workflow.o -o
+#        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Exe\c.out --redirect
+#        _Printf=_PrintfFull --redirect _Scanf=_ScanfFull --map
 #        D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\List\c.map --config
 #        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
 #        7.3\arm\config\linker\ST\stm32f030x6.icf" --semihosting --entry
@@ -55,98 +59,114 @@ __SystemLibrary = DLib
 "P1":  place in [from 0x08000000 to 0x08007fff] { ro };
 "P2":  place in [from 0x20000000 to 0x20000fff] { rw, block CSTACK, block HEAP };
 
-  Section            Kind        Address   Size  Object
-  -------            ----        -------   ----  ------
-"A1":                                      0xc0
-  .intvec            ro code  0x08000000   0xc0  startup_stm32f0xx.o [1]
-                            - 0x080000c0   0xc0
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"A1":                                       0xc0
+  .intvec            ro code  0x08000000    0xc0  startup_stm32f0xx.o [1]
+                            - 0x080000c0    0xc0
 
-"P1":                                     0xf02
-  .text              ro code  0x080000c0  0x4f0  main.o [1]
-  .text              ro code  0x080005b0   0xe6  stm32f0xx_gpio.o [1]
-  .text              ro code  0x08000696    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000698  0x1a6  stm32f0xx_tim.o [1]
-  .text              ro code  0x0800083e   0xc2  DblDiv.o [4]
-  .text              ro code  0x08000900   0x2e  DblToI32.o [4]
-  .text              ro code  0x0800092e    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000930   0x20  I32ToDbl.o [4]
-  .text              ro code  0x08000950  0x1b4  DblAddSub.o [4]
-  .text              ro code  0x08000b04  0x184  DblMul.o [4]
-  .text              ro code  0x08000c88   0x32  DblCmpLe.o [4]
-  .text              ro code  0x08000cba    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000cbc   0x90  stm32f0xx_rcc.o [1]
-  .text              ro code  0x08000d4c  0x114  system_stm32f0xx.o [1]
-  .text              ro code  0x08000e60   0x3c  zero_init3.o [5]
-  .text              ro code  0x08000e9c   0x30  copy_init3.o [5]
-  .text              ro code  0x08000ecc   0x28  data_init.o [5]
-  .iar.init_table    const    0x08000ef4   0x24  - Linker created -
-  .text              ro code  0x08000f18   0x1a  cmain.o [5]
-  .text              ro code  0x08000f32    0x4  low_level_init.o [3]
-  .text              ro code  0x08000f36    0x8  exit.o [3]
-  .text              ro code  0x08000f3e    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f40    0xa  cexit.o [5]
-  .text              ro code  0x08000f4a    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f4c   0x14  exit.o [6]
-  .text              ro code  0x08000f60   0x10  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f70    0xc  cstartup_M.o [5]
-  Initializer bytes  const    0x08000f7c    0xc  <for P2-1>
-  .text              ro code  0x08000f88    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f8a    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f8c    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f8e    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f90    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f92    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f94    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f96    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f98    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f9a    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f9c    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000f9e    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fa0    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fa2    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fa4    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fa6    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fa8    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000faa    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fac    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fae    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fb0    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fb2    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fb4    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fb6    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fb8    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fba    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fbc    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fbe    0x2  startup_stm32f0xx.o [1]
-  .text              ro code  0x08000fc0    0x2  startup_stm32f0xx.o [1]
-  .rodata            const    0x08000fc2    0x0  zero_init3.o [5]
-  .rodata            const    0x08000fc2    0x0  copy_init3.o [5]
-                            - 0x08000fc2  0xf02
+"P1":                                     0x1690
+  .text              ro code  0x080000c0   0x5a8  periphery.o [1]
+  .text              ro code  0x08000668    0xb4  stm32f0xx_rcc.o [1]
+  .text              ro code  0x0800071c    0xe6  stm32f0xx_gpio.o [1]
+  .text              ro code  0x08000802     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000804   0x1be  stm32f0xx_tim.o [1]
+  .text              ro code  0x080009c2     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x080009c4   0x478  workflow.o [1]
+  .text              ro code  0x08000e3c    0x26  FltCmpLe.o [4]
+  .text              ro code  0x08000e62     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08000e64    0x28  FltCmpGe.o [4]
+  .text              ro code  0x08000e8c    0xb0  FltMul.o [4]
+  .text              ro code  0x08000f3c    0x26  FltToU32.o [4]
+  .text              ro code  0x08000f62   0x120  FltAddSub.o [4]
+  .text              ro code  0x08001082     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001084    0x36  I32ToFlt.o [4]
+  .text              ro code  0x080010ba     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x080010bc    0x3a  FltToS32.o [4]
+  .text              ro code  0x080010f6     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x080010f8   0x1d4  interrupts.o [1]
+  .text              ro code  0x080012cc   0x114  system_stm32f0xx.o [1]
+  .text              ro code  0x080013e0    0xc8  main.o [1]
+  .text              ro code  0x080014a8    0xac  PIcontrol.o [1]
+  .text              ro code  0x08001554    0xaa  FltDiv.o [4]
+  .text              ro code  0x080015fe    0x3c  zero_init3.o [5]
+  .text              ro code  0x0800163a    0x30  copy_init3.o [5]
+  .text              ro code  0x0800166a     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800166c    0x28  data_init.o [5]
+  .iar.init_table    const    0x08001694    0x24  - Linker created -
+  .text              ro code  0x080016b8    0x1a  cmain.o [5]
+  .text              ro code  0x080016d2     0x4  low_level_init.o [3]
+  .text              ro code  0x080016d6     0x8  exit.o [3]
+  .text              ro code  0x080016de     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x080016e0     0xa  cexit.o [5]
+  .text              ro code  0x080016ea     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x080016ec    0x14  exit.o [6]
+  .text              ro code  0x08001700    0x10  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001710     0xc  cstartup_M.o [5]
+  Initializer bytes  const    0x0800171c     0x8  <for P2-1>
+  .text              ro code  0x08001724     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001726     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001728     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800172a     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800172c     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800172e     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001730     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001732     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001734     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001736     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001738     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800173a     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800173c     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800173e     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001740     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001742     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001744     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001746     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x08001748     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800174a     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800174c     0x2  startup_stm32f0xx.o [1]
+  .text              ro code  0x0800174e     0x2  startup_stm32f0xx.o [1]
+  .rodata            const    0x08001750     0x0  zero_init3.o [5]
+  .rodata            const    0x08001750     0x0  copy_init3.o [5]
+                            - 0x08001750  0x1690
 
-"P2", part 1 of 3:                          0xc
-  P2-1                        0x20000000    0xc  <Init block>
-    .data            inited   0x20000000    0x8  main.o [1]
-    .data            inited   0x20000008    0x4  main.o [1]
-                            - 0x2000000c    0xc
+"P2", part 1 of 3:                           0x8
+  P2-1                        0x20000000     0x5  <Init block>
+    .data            inited   0x20000000     0x4  workflow.o [1]
+    .data            inited   0x20000004     0x1  PIcontrol.o [1]
+                            - 0x20000005     0x5
 
-"P2", part 2 of 3:                        0x400
-  CSTACK                      0x20000010  0x400  <Block>
-    CSTACK           uninit   0x20000010  0x400  <Block tail>
-                            - 0x20000410  0x400
+"P2", part 2 of 3:                         0x400
+  CSTACK                      0x20000008   0x400  <Block>
+    CSTACK           uninit   0x20000008   0x400  <Block tail>
+                            - 0x20000408   0x400
 
-"P2", part 3 of 3:                         0x54
-  .bss               zero     0x20000410    0xc  main.o [1]
-  .bss               zero     0x2000041c    0xc  main.o [1]
-  .bss               zero     0x20000428    0xc  main.o [1]
-  .bss               zero     0x20000434    0x8  main.o [1]
-  .bss               zero     0x2000043c    0x8  main.o [1]
-  .bss               zero     0x20000444    0x4  main.o [1]
-  .bss               zero     0x20000448    0x8  main.o [1]
-  .bss               zero     0x20000450    0x8  main.o [1]
-  .bss               zero     0x20000458    0x4  main.o [1]
-  .bss               zero     0x2000045c    0x4  main.o [1]
-  .bss               zero     0x20000460    0x1  main.o [1]
-                            - 0x20000461   0x51
+"P2", part 3 of 3:                          0x70
+  .bss               zero     0x20000408     0xc  periphery.o [1]
+  .bss               zero     0x20000414     0xc  periphery.o [1]
+  .bss               zero     0x20000420     0xc  periphery.o [1]
+  .bss               zero     0x2000042c     0xc  periphery.o [1]
+  .bss               zero     0x20000438     0xc  periphery.o [1]
+  .bss               zero     0x20000444     0x8  periphery.o [1]
+  .bss               zero     0x2000044c     0x4  interrupts.o [1]
+  .bss               zero     0x20000450     0x4  PIcontrol.o [1]
+  .bss               zero     0x20000454     0x4  PIcontrol.o [1]
+  .bss               zero     0x20000458     0x4  PIcontrol.o [1]
+  .bss               zero     0x2000045c     0x4  PIcontrol.o [1]
+  .bss               zero     0x20000460     0x4  PIcontrol.o [1]
+  .bss               zero     0x20000464     0x4  PIcontrol.o [1]
+  .bss               zero     0x20000468     0x4  workflow.o [1]
+  .bss               zero     0x2000046c     0x1  interrupts.o [1]
+  .bss               zero     0x2000046d     0x1  interrupts.o [1]
+  .bss               zero     0x2000046e     0x1  interrupts.o [1]
+  .bss               zero     0x2000046f     0x1  interrupts.o [1]
+  .bss               zero     0x20000470     0x1  interrupts.o [1]
+  .bss               zero     0x20000471     0x1  main.o [1]
+  .bss               zero     0x20000472     0x1  main.o [1]
+  .bss               zero     0x20000473     0x1  main.o [1]
+  .bss               zero     0x20000474     0x1  PIcontrol.o [1]
+  .bss               zero     0x20000475     0x1  workflow.o [1]
+                            - 0x20000476    0x6e
 
 
 *******************************************************************************
@@ -156,14 +176,14 @@ __SystemLibrary = DLib
           Address     Size
           -------     ----
 Zero (__iar_zero_init3)
-    1 destination range, total size 0x51:
-          0x20000410  0x51
+    1 destination range, total size 0x6e:
+          0x20000408  0x6e
 
 Copy (__iar_copy_init3)
-    1 source range, total size 0xc:
-          0x08000f7c   0xc
-    1 destination range, total size 0xc:
-          0x20000000   0xc
+    1 source range, total size 0x8 (160% of destination):
+          0x0800171c   0x8
+    1 destination range, total size 0x5:
+          0x20000000   0x5
 
 
 
@@ -174,14 +194,18 @@ Copy (__iar_copy_init3)
     Module               ro code  ro data  rw data
     ------               -------  -------  -------
 D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj: [1]
-    main.o                 1 264       12       93
-    startup_stm32f0xx.o      276
+    PIcontrol.o              172        1       26
+    interrupts.o             468                 9
+    main.o                   200                 3
+    periphery.o            1 448                68
+    startup_stm32f0xx.o      270
     stm32f0xx_gpio.o         230
-    stm32f0xx_rcc.o          144
-    stm32f0xx_tim.o          422
+    stm32f0xx_rcc.o          180
+    stm32f0xx_tim.o          446
     system_stm32f0xx.o       276
+    workflow.o             1 144        4        9
     ----------------------------------------------
-    Total:                 2 612       12       93
+    Total:                 4 834        5      115
 
 command line: [2]
     ----------------------------------------------
@@ -194,14 +218,16 @@ dl6M_tln.a: [3]
     Total:                    12
 
 m6M_tl.a: [4]
-    DblAddSub.o              436
-    DblCmpLe.o                50
-    DblDiv.o                 194
-    DblMul.o                 388
-    DblToI32.o                46
-    I32ToDbl.o                32
+    FltAddSub.o              288
+    FltCmpGe.o                40
+    FltCmpLe.o                38
+    FltDiv.o                 170
+    FltMul.o                 176
+    FltToS32.o                58
+    FltToU32.o                38
+    I32ToFlt.o                54
     ----------------------------------------------
-    Total:                 1 146
+    Total:                   862
 
 rt6M_tl.a: [5]
     cexit.o                   10
@@ -218,9 +244,9 @@ shb_l.a: [6]
     ----------------------------------------------
     Total:                    20
 
-    Linker created                     36    1 024
+    Linker created                     39    1 024
 --------------------------------------------------
-    Grand Total:           3 986       48    1 117
+    Grand Total:           5 924       44    1 139
 
 
 *******************************************************************************
@@ -229,80 +255,108 @@ shb_l.a: [6]
 
 Entry                      Address   Size  Type      Object
 -----                      -------   ----  ----      ------
-.iar.init_table$$Base   0x08000ef4          --   Gb  - Linker created -
-.iar.init_table$$Limit  0x08000f18          --   Gb  - Linker created -
-?main                   0x08000f19         Code  Gb  cmain.o [5]
-CSTACK$$Base            0x20000010          --   Gb  - Linker created -
-CSTACK$$Limit           0x20000410          --   Gb  - Linker created -
-Delay_us                0x0800050f   0x26  Code  Gb  main.o [1]
-GPIO_1wire_InitStruct   0x2000043c    0x8  Data  Gb  main.o [1]
-GPIO_Init               0x080005b1   0xbe  Code  Gb  stm32f0xx_gpio.o [1]
-GPIO_InitStruct         0x20000434    0x8  Data  Gb  main.o [1]
-GPIO_ReadInputDataBit   0x0800066f   0x1e  Code  Gb  stm32f0xx_gpio.o [1]
-GPIO_ResetBits          0x08000693    0x4  Code  Gb  stm32f0xx_gpio.o [1]
-GPIO_SetBits            0x0800068d    0x6  Code  Gb  stm32f0xx_gpio.o [1]
-GetTemperature          0x08000551   0x48  Code  Gb  main.o [1]
-HeatRatio               0x20000008    0x4  Data  Gb  main.o [1]
-MasterResetPresence     0x080003a5   0x94  Code  Gb  main.o [1]
-MySystemInit            0x08000227   0xec  Code  Gb  main.o [1]
-OneWireInput            0x08000333   0x2e  Code  Gb  main.o [1]
-OneWireOutput           0x08000361   0x2e  Code  Gb  main.o [1]
-OneWirePull             0x08000323   0x10  Code  Gb  main.o [1]
-OneWireRelease          0x08000313   0x10  Code  Gb  main.o [1]
-PID_buf                 0x20000450    0x8  Data  Gb  main.o [1]
-RCC_AHBPeriphClockCmd   0x08000cbd   0x20  Code  Gb  stm32f0xx_rcc.o [1]
-RCC_APB1PeriphClockCmd  0x08000cdd   0x20  Code  Gb  stm32f0xx_rcc.o [1]
-RCC_APB1PeriphResetCmd  0x08000d1d   0x20  Code  Gb  stm32f0xx_rcc.o [1]
-RCC_APB2PeriphResetCmd  0x08000cfd   0x20  Code  Gb  stm32f0xx_rcc.o [1]
-ReadByte                0x080004b3   0x5c  Code  Gb  main.o [1]
-Region$$Table$$Base     0x08000ef4          --   Gb  - Linker created -
-Region$$Table$$Limit    0x08000f18          --   Gb  - Linker created -
-SetSysClock             0x08000dbb   0x76  Code  Lc  system_stm32f0xx.o [1]
-StartConvertion         0x08000539   0x18  Code  Gb  main.o [1]
-SystemInit              0x08000d4d   0x6e  Code  Gb  system_stm32f0xx.o [1]
+.iar.init_table$$Base   0x08001694          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x080016b8          --   Gb  - Linker created -
+?main                   0x080016b9         Code  Gb  cmain.o [5]
+Blink                   0x20000471    0x1  Data  Gb  main.o [1]
+Button                  0x0800032d    0x6  Code  Gb  periphery.o [1]
+ButtonStatus            0x2000046d    0x1  Data  Gb  interrupts.o [1]
+BuzzerControl           0x08000635   0x18  Code  Gb  periphery.o [1]
+BuzzerOnOff             0x2000046f    0x1  Data  Gb  interrupts.o [1]
+CSTACK$$Base            0x20000008          --   Gb  - Linker created -
+CSTACK$$Limit           0x20000408          --   Gb  - Linker created -
+CommForPIcontrol        0x20000474    0x1  Data  Gb  PIcontrol.o [1]
+CommForTempConv         0x2000046c    0x1  Data  Gb  interrupts.o [1]
+CurrentButtonState      0x20000473    0x1  Data  Gb  main.o [1]
+CurrentPower            0x20000450    0x4  Data  Gb  PIcontrol.o [1]
+CurrentTemp             0x20000458    0x4  Data  Gb  PIcontrol.o [1]
+Delay_ms                0x0800055d   0x18  Code  Gb  periphery.o [1]
+Delay_us                0x08000523   0x2a  Code  Gb  periphery.o [1]
+GPIO_1wire_InitStruct   0x20000444    0x8  Data  Gb  periphery.o [1]
+GPIO_Init               0x0800071d   0xbe  Code  Gb  stm32f0xx_gpio.o [1]
+GPIO_ReadInputDataBit   0x080007db   0x1e  Code  Gb  stm32f0xx_gpio.o [1]
+GPIO_ResetBits          0x080007ff    0x4  Code  Gb  stm32f0xx_gpio.o [1]
+GPIO_SetBits            0x080007f9    0x6  Code  Gb  stm32f0xx_gpio.o [1]
+GetRawTemperature       0x080005c1   0x70  Code  Gb  periphery.o [1]
+HeaterOffTime           0x20000000    0x4  Data  Gb  workflow.o [1]
+HeaterOnTime            0x20000468    0x4  Data  Gb  workflow.o [1]
+HeaterStatus            0x20000475    0x1  Data  Gb  workflow.o [1]
+IO_Init                 0x080000cf  0x142  Code  Gb  periphery.o [1]
+Integral                0x20000460    0x4  Data  Gb  PIcontrol.o [1]
+LED_Control             0x08000b69  0x112  Code  Gb  workflow.o [1]
+LEDsBar                 0x08000c95   0x6e  Code  Gb  workflow.o [1]
+MasterResetPresence     0x0800038f   0xa2  Code  Gb  periphery.o [1]
+NVIC_EnableIRQ          0x080000c1    0xe  Code  Lc  periphery.o [1]
+OldButtonState          0x20000472    0x1  Data  Gb  main.o [1]
+OneWireInput            0x08000333   0x2e  Code  Gb  periphery.o [1]
+OneWireOutput           0x08000361   0x2e  Code  Gb  periphery.o [1]
+RCC_AHBPeriphClockCmd   0x08000669   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB1PeriphClockCmd  0x080006a9   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB1PeriphResetCmd  0x080006e9   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB2PeriphClockCmd  0x08000689   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RCC_APB2PeriphResetCmd  0x080006c9   0x20  Code  Gb  stm32f0xx_rcc.o [1]
+RawTemp                 0x20000454    0x4  Data  Gb  PIcontrol.o [1]
+ReadByte                0x080004b7   0x6c  Code  Gb  periphery.o [1]
+Region$$Table$$Base     0x08001694          --   Gb  - Linker created -
+Region$$Table$$Limit    0x080016b8          --   Gb  - Linker created -
+SelfTest                0x08000a23  0x146  Code  Gb  workflow.o [1]
+SetPower                0x080009c5   0x5e  Code  Gb  workflow.o [1]
+SetSysClock             0x0800133b   0x76  Code  Lc  system_stm32f0xx.o [1]
+ShowLED_Regulate        0x08000d03  0x134  Code  Gb  workflow.o [1]
+StartConvertion         0x08000575   0x40  Code  Gb  periphery.o [1]
+StartCounter            0x20000464    0x4  Data  Gb  PIcontrol.o [1]
+SystemInit              0x080012cd   0x6e  Code  Gb  system_stm32f0xx.o [1]
+TIM14_IRQHandler        0x080010f9   0xde  Code  Gb  interrupts.o [1]
 TIM14_TimeBaseInitStruct
-                        0x2000041c    0xc  Data  Gb  main.o [1]
-TIM14_period            0x2000045c    0x4  Data  Gb  main.o [1]
+                        0x20000414    0xc  Data  Gb  periphery.o [1]
+TIM16_IRQHandler        0x080011d7   0x76  Code  Gb  interrupts.o [1]
+TIM16_TimeBaseInitStruct
+                        0x20000420    0xc  Data  Gb  periphery.o [1]
+TIM17_IRQHandler        0x0800124d   0x42  Code  Gb  interrupts.o [1]
+TIM17_TimeBaseInitStruct
+                        0x2000042c    0xc  Data  Gb  periphery.o [1]
 TIM3_TimeBaseInitStruct
-                        0x20000410    0xc  Data  Gb  main.o [1]
-TIM_ClearFlag           0x08000837    0x8  Code  Gb  stm32f0xx_tim.o [1]
-TIM_Cmd                 0x080007d9   0x1c  Code  Gb  stm32f0xx_tim.o [1]
-TIM_DeInit              0x08000699   0xda  Code  Gb  stm32f0xx_tim.o [1]
-TIM_GetFlagStatus       0x0800081d   0x1a  Code  Gb  stm32f0xx_tim.o [1]
-TIM_TimeBaseInit        0x08000773   0x66  Code  Gb  stm32f0xx_tim.o [1]
-TempActValue            0x20000458    0x4  Data  Gb  main.o [1]
-TempSPValue             0x20000444    0x4  Data  Gb  main.o [1]
-TempSetpoint            0x20000000    0x8  Data  Gb  main.o [1]
-TimeCounter             0x20000460    0x1  Data  Gb  main.o [1]
-WriteByte               0x08000465   0x4e  Code  Gb  main.o [1]
+                        0x20000438    0xc  Data  Gb  periphery.o [1]
+TIM_ClearFlag           0x080009bb    0x8  Code  Gb  stm32f0xx_tim.o [1]
+TIM_Cmd                 0x08000945   0x1c  Code  Gb  stm32f0xx_tim.o [1]
+TIM_DeInit              0x08000805   0xda  Code  Gb  stm32f0xx_tim.o [1]
+TIM_GetFlagStatus       0x080009a1   0x1a  Code  Gb  stm32f0xx_tim.o [1]
+TIM_ITConfig            0x08000989   0x18  Code  Gb  stm32f0xx_tim.o [1]
+TIM_TimeBaseInit        0x080008df   0x66  Code  Gb  stm32f0xx_tim.o [1]
+TempSetpoint            0x20000004    0x1  Data  Gb  PIcontrol.o [1]
+Timers_Init             0x08000211  0x11c  Code  Gb  periphery.o [1]
+UpdatePower             0x080014a9   0xac  Code  Gb  PIcontrol.o [1]
+WriteByte               0x08000449   0x6e  Code  Gb  periphery.o [1]
 __ICFEDIT_region_RAM_end__ {Abs}
                         0x20000fff          --   Gb  command line/config [2]
 __ICFEDIT_region_RAM_start__ {Abs}
                         0x20000000          --   Gb  command line/config [2]
-__aeabi_cdcmple         0x08000c89         Code  Gb  DblCmpLe.o [4]
-__aeabi_d2uiz           0x08000901         Code  Gb  DblToI32.o [4]
-__aeabi_dadd            0x08000951         Code  Gb  DblAddSub.o [4]
-__aeabi_ddiv            0x0800083f         Code  Gb  DblDiv.o [4]
-__aeabi_dmul            0x08000b05         Code  Gb  DblMul.o [4]
-__aeabi_dsub            0x08000a17         Code  Gb  DblAddSub.o [4]
-__aeabi_ui2d            0x08000931         Code  Gb  I32ToDbl.o [4]
-__cmain                 0x08000f19         Code  Gb  cmain.o [5]
-__exit                  0x08000f4d   0x14  Code  Gb  exit.o [6]
-__iar_copy_init3        0x08000e9d   0x30  Code  Gb  copy_init3.o [5]
-__iar_d2uiz             0x08000905         Code  Gb  DblToI32.o [4]
-__iar_data_init3        0x08000ecd   0x28  Code  Gb  data_init.o [5]
-__iar_program_start     0x08000f71         Code  Gb  cstartup_M.o [5]
-__iar_ui2d              0x08000935         Code  Gb  I32ToDbl.o [4]
-__iar_zero_init3        0x08000e61   0x3c  Code  Gb  zero_init3.o [5]
-__low_level_init        0x08000f33    0x4  Code  Gb  low_level_init.o [3]
+__aeabi_cfcmple         0x08000e3d         Code  Gb  FltCmpLe.o [4]
+__aeabi_cfrcmple        0x08000e65         Code  Gb  FltCmpGe.o [4]
+__aeabi_f2iz            0x080010bd         Code  Gb  FltToS32.o [4]
+__aeabi_f2uiz           0x08000f3d         Code  Gb  FltToU32.o [4]
+__aeabi_fadd            0x08000f63         Code  Gb  FltAddSub.o [4]
+__aeabi_fdiv            0x08001555         Code  Gb  FltDiv.o [4]
+__aeabi_fmul            0x08000e8d         Code  Gb  FltMul.o [4]
+__aeabi_fsub            0x08000fd3         Code  Gb  FltAddSub.o [4]
+__aeabi_i2f             0x08001085         Code  Gb  I32ToFlt.o [4]
+__aeabi_ui2f            0x0800109d         Code  Gb  I32ToFlt.o [4]
+__cmain                 0x080016b9         Code  Gb  cmain.o [5]
+__exit                  0x080016ed   0x14  Code  Gb  exit.o [6]
+__iar_copy_init3        0x0800163b   0x30  Code  Gb  copy_init3.o [5]
+__iar_data_init3        0x0800166d   0x28  Code  Gb  data_init.o [5]
+__iar_program_start     0x08001711         Code  Gb  cstartup_M.o [5]
+__iar_ui2f              0x080010a1         Code  Gb  I32ToFlt.o [4]
+__iar_zero_init3        0x080015ff   0x3c  Code  Gb  zero_init3.o [5]
+__low_level_init        0x080016d3    0x4  Code  Gb  low_level_init.o [3]
 __vector_table          0x08000000         Data  Gb  startup_stm32f0xx.o [1]
-_call_main              0x08000f25         Code  Gb  cmain.o [5]
-_exit                   0x08000f41         Code  Gb  cexit.o [5]
-_main                   0x08000f2f         Code  Gb  cmain.o [5]
-a                       0x20000428    0xc  Data  Gb  main.o [1]
-e                       0x20000448    0x8  Data  Gb  main.o [1]
-exit                    0x08000f37    0x8  Code  Gb  exit.o [3]
-main                    0x080000c1  0x166  Code  Gb  main.o [1]
+_call_main              0x080016c5         Code  Gb  cmain.o [5]
+_exit                   0x080016e1         Code  Gb  cexit.o [5]
+_main                   0x080016cf         Code  Gb  cmain.o [5]
+eTemp                   0x2000045c    0x4  Data  Gb  PIcontrol.o [1]
+exit                    0x080016d7    0x8  Code  Gb  exit.o [3]
+main                    0x080013e1   0xc8  Code  Gb  main.o [1]
+wire_buffer             0x20000408    0xc  Data  Gb  periphery.o [1]
 
 
 [1] = D:\Alex\Projects\Humidifier\FIRMWARE\work\Debug\Obj
@@ -312,9 +366,9 @@ main                    0x080000c1  0x166  Code  Gb  main.o [1]
 [5] = rt6M_tl.a
 [6] = shb_l.a
 
-  3 986 bytes of readonly  code memory
-     48 bytes of readonly  data memory
-  1 117 bytes of readwrite data memory
+  5 924 bytes of readonly  code memory
+     44 bytes of readonly  data memory
+  1 139 bytes of readwrite data memory
 
 Errors: none
 Warnings: none

@@ -1,16 +1,29 @@
-#define HEAT_ON          GPIO_SetBits(GPIOA, GPIO_Pin_8);
-#define HEAT_OFF         GPIO_ResetBits(GPIOA, GPIO_Pin_8);
+#define SELF_TEST_PACE    100
+#define WAKE_UP           5
+#define START_INTEGRAL    240
+#define RISE_TIME         (float)300
+#define COLD_DELTA        (float)1.8
 
-#define WIRE_RELEASE     GPIO_SetBits(GPIOA, GPIO_Pin_12);
-#define WIRE_PULL        GPIO_ResetBits(GPIOA, GPIO_Pin_12);
-#define WIRE_READ        GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_12)
+#define K_PID             (float)0.02
+#define TI_PID            (float)180
 
-#define TEMP_RESOLITION   0.0625
+#define TEMP_RESOLITION   (float)0.0625
+#define DEFAULT_TEMP      37
+#define MIN_TEMP          35
+#define TEMP_RANGE        8
+#define MAX_TEMP          MIN_TEMP + TEMP_RANGE - 1
+
 #define HEAT_CYCLE        10000
-#define TIME_CYCLE        10 
+#define TIM14PRESCALER    4779
 
-//#define RESET_ON        GPIO_SetBits(GPIOB, GPIO_Pin_7);
-//#define RESET_OFF       GPIO_ResetBits(GPIOB, GPIO_Pin_7);
-//
-//#define DC_ON           GPIO_SetBits(GPIOB, GPIO_Pin_6);
-//#define DC_OFF          GPIO_ResetBits(GPIOB, GPIO_Pin_6);
+#define TIM16PRESCALER    479
+#define BUTTON_TIME       100
+#define JITTER            5
+#define SEC_CONST         1000
+
+#define TIM17PRESCALER    120
+#define BUZZER_TIME       50
+
+#define HOUR 3600
+
+ 

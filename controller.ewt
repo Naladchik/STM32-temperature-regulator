@@ -2161,13 +2161,25 @@
     </file>
   </group>
   <file>
+    <name>$PROJ_DIR$\interrupts.c</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\main.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\periphery.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\PIcontrol.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\CMSIS\ST\STM32F0xx\Source\Templates\iar\startup_stm32f0xx.s</name>
   </file>
   <file>
     <name>$PROJ_DIR$\system_stm32f0xx.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\workflow.c</name>
   </file>
 </project>
 
