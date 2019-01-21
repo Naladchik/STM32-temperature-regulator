@@ -7,6 +7,7 @@
 
 extern char CommForPIcontrol;
 extern char CommForTempConv;
+extern char PreHeat;
 
 extern int RawTemp;
 extern char TempSetpoint;
@@ -28,12 +29,13 @@ int main(void)
       if(CommForTempConv != 0){
         RawTemp = GetRawTemperature();        
         StartConvertion();
+        Calc_eTemp();
         CommForPIcontrol = 1;
         CommForTempConv = 0;
       }
       
       if(CommForPIcontrol != 0){
-        UpdatePower();
+        if(PreHeat != 0) HeatUp(); else UpdatePower();
         CommForPIcontrol = 0;
       }
       

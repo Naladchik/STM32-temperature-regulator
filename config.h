@@ -1,14 +1,16 @@
 #define SELF_TEST_PACE    100
-#define WAKE_UP           5
+#define WAKE_UP           3
 #define START_INTEGRAL    240
 #define RISE_TIME         (float)300
-#define COLD_DELTA        (float)1.8
+#define COLD_DELTA        (float)2
+#define PREHEAT_TIME      1
+#define PREHEAT_K         (float)1.5
 
 #define K_PID             (float)0.02
 #define TI_PID            (float)180
 
 #define TEMP_RESOLITION   (float)0.0625
-#define DEFAULT_TEMP      37
+#define DEFAULT_TEMP      38
 #define MIN_TEMP          35
 #define TEMP_RANGE        8
 #define MAX_TEMP          MIN_TEMP + TEMP_RANGE - 1
