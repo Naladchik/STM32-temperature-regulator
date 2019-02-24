@@ -122,6 +122,48 @@ void Timers_Init(void){
 }
 
 
+void Analog_Init(void){
+  GPIO_InitTypeDef GPIO_InitStruct;
+  ADC_InitTypeDef ADC_InitStructure;
+  
+  //GPIOA analog inputs
+    GPIO_InitStruct.GPIO_Pin=GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2;
+    GPIO_InitStruct.GPIO_Mode=GPIO_Mode_AN;
+    GPIO_Init(GPIOA,&GPIO_InitStruct);  
+    RCC_ADCCLKConfig (RCC_ADCCLK_PCLK_Div4);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+    ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+    ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+    ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None;
+    ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+    ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+    ADC_InitStructure.ADC_ScanDirection = ADC_ScanDirection_Upward;
+    ADC_Init(ADC1, &ADC_InitStructure);
+    ADC_Cmd (ADC1,DISABLE);
+    if( ADC_GetCalibrationFactor(ADC1) == 0){}
+    ADC_Cmd (ADC1,ENABLE);
+//    ADC_SoftwareStartConvCmd(ADC1, ENABLE); // start conversion (will be endless as we are in continuous mode)
+    if(readADC1(ADC_Channel_0) == 0){}
+    if(readADC1(ADC_Channel_1) == 0){}
+    if(readADC1(ADC_Channel_2) == 0){}
+    if(readADC1(ADC_Channel_0) == 0){}
+    if(readADC1(ADC_Channel_1) == 0){}
+    if(readADC1(ADC_Channel_2) == 0){}  
+}
+
+
+unsigned int readADC1(unsigned int channel){
+  ADC_ChannelConfig(ADC1, channel, ADC_SampleTime_239_5Cycles);
+  ADC_StartOfConversion(ADC1);
+  for(uint16_t i=0; i<10000; i++){
+      if(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) != RESET) break;
+      asm volatile(" nop " "\n\t");
+    }
+  return ADC_GetConversionValue(ADC1);
+}
+
+
+
 unsigned char Button(void){
   extern char ButtonStatus;
   return(ButtonStatus);

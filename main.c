@@ -16,42 +16,51 @@ char Blink = 0;
 char OldButtonState = 0;
 char CurrentButtonState = 0;
 
+char OnOffStatus = 0;
 
+unsigned int result0, result1, result2;
 
 int main(void)
 {    
     IO_Init();
     Timers_Init();
+    Analog_Init();
     SelfTest();
     SetPower(0.00);
     while(1){
-      //Temperature acquire every 1 sec
-      if(CommForTempConv != 0){
-        RawTemp = GetRawTemperature();        
-        StartConvertion();
-        Calc_eTemp();
-        CommForPIcontrol = 1;
-        CommForTempConv = 0;
-      }
-      
-      if(CommForPIcontrol != 0){
-        if(PreHeat != 0) HeatUp(); else UpdatePower();
-        CommForPIcontrol = 0;
-      }
-      
-      //Indicating LED
-      ShowLED_Regulate(TempSetpoint, RawTemp);
-      //UI realization
-      CurrentButtonState = Button();
-      if(CurrentButtonState != 0){
-        if(OldButtonState == 0){
-          LED_Control(TempSetpoint - MIN_TEMP + 1, DISABLE);
-          Blink = 1;
-          if(TempSetpoint == MAX_TEMP) TempSetpoint = MIN_TEMP; else TempSetpoint++;
+      if(OnOffStatus == 1){
+        //POWERED ON SECTION
+        //Temperature acquire every 1 sec
+        if(CommForTempConv != 0){
+          RawTemp = GetRawTemperature();        
+          StartConvertion();
+          Calc_eTemp();
+          CommForPIcontrol = 1;
+          CommForTempConv = 0;
         }
+        
+        if(CommForPIcontrol != 0){
+          UpdatePower();
+          CommForPIcontrol = 0;
+        }
+        
+        //Indicating LED
+        ShowLED_Regulate(TempSetpoint, RawTemp);  
+        //UI realization
+        CurrentButtonState = Button();
+        if(CurrentButtonState != 0){
+          if(OldButtonState == 0){
+            LED_Control(TempSetpoint - MIN_TEMP + 1, DISABLE);
+            Blink = 1;
+            if(TempSetpoint == MAX_TEMP) TempSetpoint = MIN_TEMP; else TempSetpoint++;
+          }
+        }
+        OldButtonState = CurrentButtonState;
+      }else{
+        //POWERED OFF SECTION
+        
       }
-      OldButtonState = CurrentButtonState;
-    }    
+    }
 }
 
 

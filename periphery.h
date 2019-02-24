@@ -47,6 +47,8 @@
 //Init functions
 void IO_Init(void);
 void Timers_Init(void);
+void Analog_Init(void);
+unsigned int readADC1(unsigned int channel);
 //1-wire functions
 void OneWireRelease(void);
 void OneWirePull(void);

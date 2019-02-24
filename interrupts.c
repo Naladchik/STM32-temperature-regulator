@@ -11,26 +11,34 @@ void TIM14_IRQHandler(void){
     CommForTempConv = 1;
     TIM14->ARR = HEAT_CYCLE;
     if(HeaterOnTime == 0){
-      RED_OFF;
-      BLUE_ON;
+      if(DEBUG_MODE == 1){
+        RED_OFF;
+        BLUE_ON;
+      }
       HEAT_OFF;
     }
     if(HeaterOffTime == 0){
-      RED_ON;
-      BLUE_OFF;
+      if(DEBUG_MODE == 1){
+        RED_ON;
+        BLUE_OFF;
+      }
       HEAT_ON;
     }
   }else{
     if(HeaterStatus == 0){
-      RED_ON;
-      BLUE_OFF;
+      if(DEBUG_MODE == 1){
+        RED_ON;
+        BLUE_OFF;
+      }
       HEAT_ON;
       TIM14->ARR = HeaterOnTime;
       HeaterStatus = 1;
       CommForTempConv = 1;
     }else{
-      RED_OFF;
-      BLUE_ON;
+      if(DEBUG_MODE == 1){
+        RED_OFF;
+        BLUE_ON;
+      }
       HEAT_OFF;
       TIM14->ARR = HeaterOffTime;
       HeaterStatus = 0;

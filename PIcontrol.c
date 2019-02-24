@@ -16,17 +16,42 @@ char PreHeat = 1;
 void Calc_eTemp(void){
   CurrentTemp = TEMP_RESOLITION * (float)RawTemp;
   eTemp = (float)TempSetpoint - CurrentTemp;
+  if(eTemp > 0){
+    //Below setpoint
+    if(eTemp < 0.5){
+      //Dofference is low
+      if(DEBUG_MODE == 0){
+        RED_ON;
+        BLUE_ON;
+        GREEN_ON;
+      }      
+    }else{
+      //dofference is high
+      if(DEBUG_MODE == 0){
+        RED_ON;
+        BLUE_OFF;
+        GREEN_OFF;
+      }
+    }
+  }else{
+    //Above setpoint
+    if(DEBUG_MODE == 0){
+        RED_ON;
+        BLUE_OFF;
+        GREEN_OFF;
+      }
+  }
 }
 
 void UpdatePower(void){
   if(StartCounter >= WAKE_UP){
-    Integral += eTemp;
+    if((CurrentPower < 1.0) && (CurrentPower > 0.0)) Integral += eTemp;    
     CurrentPower = K_PID * (eTemp + Integral/TI_PID);    
     SetPower(CurrentPower);
   }
   if(StartCounter < HOUR) StartCounter++;
 }
-
+extern unsigned int result1;
 void HeatUp(void){
   static int PreHeatDope;
   if(StartCounter == WAKE_UP){

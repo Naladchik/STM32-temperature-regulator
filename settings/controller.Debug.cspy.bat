@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "D:\Alex\Projects\Humidifier\FIRMWARE\work\settings\controller.Debug.general.xcl" --backend -f "D:\Alex\Projects\Humidifier\FIRMWARE\work\settings\controller.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\settings\controller.Debug.general.xcl" --backend -f "D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\settings\controller.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "D:\Alex\Projects\Humidifier\FIRMWARE\work\settings\controller.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\Alex\Projects\Humidifier\FIRMWARE\work\settings\controller.Debug.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\settings\controller.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\settings\controller.Debug.driver.xcl" 
 
 @echo off 
 :end
