@@ -37,10 +37,10 @@ Freq=10000000
 MultiCoreRunAll=1
 [StLinkDriver]
 CStepIntDis=_ 0
-stlinkserialNo=E31DA1C0
+stlinkserialNo=2798FD0D
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=-704978046
+Checksum=-170529913
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -60,8 +60,9 @@ Category=_ 0
 LoggingEnabled=_ 0
 LogFile=_ ""
 [Aliases]
-A0=_ "D:\Alex\Projects\Humidifier\FIRMWARE\work\system_stm32f0xx.c" ""
-Count=1
+A0=_ "D:\Alex\Projects\Humidifier\FIRMWARE\work\CMSIS\ST\STM32F0xx\Source\Templates\iar\startup_stm32f0xx.s" ""
+A1=_ "D:\Alex\Projects\Humidifier\FIRMWARE\work\system_stm32f0xx.c" ""
+Count=2
 SuppressDialog=1
 [CallStackLog]
 Enabled=0

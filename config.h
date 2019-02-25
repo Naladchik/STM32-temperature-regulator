@@ -1,12 +1,9 @@
-#define DEBUG_MODE        0
-
-#define SELF_TEST_PACE    100
 #define WAKE_UP           3
 #define START_INTEGRAL    240
-#define RISE_TIME         (float)300
-#define COLD_DELTA        (float)2
-#define PREHEAT_TIME      20
-#define PREHEAT_K         (float)0.7
+//#define RISE_TIME         (float)300
+//#define COLD_DELTA        (float)2
+//#define PREHEAT_TIME      20
+//#define PREHEAT_K         (float)0.7
 
 #define K_PID             (float)0.2
 #define TI_PID            (float)120
@@ -30,6 +27,14 @@
 
 #define HOUR 3600
 
-#define F_ADDRESS_1       0x08007C00
+#define F_ADDRESS_1       (uint32_t)0x08007C00
+#define CHILD_ON          (uint16_t)0x0120 //random numbers not equal to 0000 or ffff
+#define CHILD_OFF         (uint16_t)0x4509
+#define ADULT_ON          (uint16_t)0x2782
+#define ADULT_OFF         (uint16_t)0x6352
+#define LAST_ADR          (uint32_t)(F_ADDRESS_1+0x3FE)
+
+#define RGB_RED           0x02
+#define RGB_WHITE         0x04
 
  

@@ -4,63 +4,81 @@
 #include "periphery.h"
 #include "workflow.h"
 #include "PIcontrol.h"
+#include <stdio.h>
+#include <string.h> // memcpy
+#include <stdlib.h> //realloc
 
 extern char CommForPIcontrol;
 extern char CommForTempConv;
 extern char PreHeat;
 
 extern int RawTemp;
+extern float eTemp;
 extern char TempSetpoint;
+float ActualTemperature;
+float SetTemperature;
 
-char Blink = 0;
+uint8_t RGB_status = 0;
+
 char OldButtonState = 0;
 char CurrentButtonState = 0;
+uint16_t ERROR_REG = 0;
 
-char OnOffStatus = 0;
+uint8_t OnOffStatus = 1;
 
-unsigned int result0, result1, result2;
-
-int main(void)
-{    
-    IO_Init();
-    Timers_Init();
-    Analog_Init();
-    SelfTest();
-    SetPower(0.00);
-    while(1){
-      if(OnOffStatus == 1){
-        //POWERED ON SECTION
-        //Temperature acquire every 1 sec
-        if(CommForTempConv != 0){
-          RawTemp = GetRawTemperature();        
-          StartConvertion();
-          Calc_eTemp();
-          CommForPIcontrol = 1;
-          CommForTempConv = 0;
+int main(void){
+  IO_Init();
+  Timers_Init();
+  Analog_Init();
+  SetPower(0.00);
+  SetTemperature = (float)TempSetpoint;
+  while(1){
+    if(OnOffStatus == 1){
+      //POWERED ON SECTION
+      //Temperature acquire every 1 sec
+      if(CommForTempConv != 0){
+        RawTemp = GetRawTemperature();
+        ActualTemperature = (float)RawTemp * TEMP_RESOLITION;        
+        eTemp = SetTemperature - ActualTemperature;
+        StartConvertion();
+        CommForPIcontrol = 1;
+        CommForTempConv = 0;
+      }      
+      if(CommForPIcontrol != 0){
+        UpdatePower();        
+        CommForPIcontrol = 0;
+        if(RGB_status == RGB_RED){
+          if((SetTemperature - ActualTemperature) < 0.5) RGB_status = RGB_WHITE;
+          RED_ON;
+          GREEN_OFF;
+          BLUE_OFF;
+        }else{
+          if(RGB_status == RGB_WHITE){
+            if((SetTemperature - ActualTemperature) > 1.0) RGB_status = RGB_RED;
+            RED_ON;
+            GREEN_ON;
+            BLUE_ON;
+          }else{}        
         }
-        
-        if(CommForPIcontrol != 0){
-          UpdatePower();
-          CommForPIcontrol = 0;
-        }
-        
-        //Indicating LED
-        ShowLED_Regulate(TempSetpoint, RawTemp);  
-        //UI realization
-        CurrentButtonState = Button();
-        if(CurrentButtonState != 0){
-          if(OldButtonState == 0){
-            LED_Control(TempSetpoint - MIN_TEMP + 1, DISABLE);
-            Blink = 1;
-            if(TempSetpoint == MAX_TEMP) TempSetpoint = MIN_TEMP; else TempSetpoint++;
-          }
-        }
-        OldButtonState = CurrentButtonState;
-      }else{
-        //POWERED OFF SECTION
+      }
+     // LEDsControl(bbb);
+      
+    }else{
+      //POWERED OFF SECTION
+      
+      
+    }
+    
+    //BUTTON CONTROL
+    if(CurrentButtonState != 0){
+      //Button pressed
+      if(OldButtonState == 0){
+        //Button pressed and released
         
       }
     }
+    OldButtonState = CurrentButtonState;
+  }
 }
 
 

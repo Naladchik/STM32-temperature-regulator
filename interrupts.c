@@ -5,54 +5,40 @@
 extern char HeaterStatus;
 extern unsigned int HeaterOnTime;
 extern unsigned int HeaterOffTime;
+extern uint16_t ERROR_REG;
 char CommForTempConv = 0;
-void TIM14_IRQHandler(void){
-  if((HeaterOnTime == 0) || (HeaterOffTime == 0)){
-    CommForTempConv = 1;
-    TIM14->ARR = HEAT_CYCLE;
-    if(HeaterOnTime == 0){
-      if(DEBUG_MODE == 1){
-        RED_OFF;
-        BLUE_ON;
+
+void TIM14_IRQHandler(void){ //Heater control
+  if((ERROR_REG & 0xff00) == 0){
+    if((HeaterOnTime == 0) || (HeaterOffTime == 0)){
+      CommForTempConv = 1;
+      TIM14->ARR = HEAT_CYCLE;
+      if(HeaterOnTime == 0)HEAT_OFF;
+      if(HeaterOffTime == 0)HEAT_ON;
+    }else{
+      if(HeaterStatus == 0){
+        HEAT_ON;
+        TIM14->ARR = HeaterOnTime;
+        HeaterStatus = 1;
+        CommForTempConv = 1;
+      }else{
+        HEAT_OFF;
+        TIM14->ARR = HeaterOffTime;
+        HeaterStatus = 0;
       }
-      HEAT_OFF;
-    }
-    if(HeaterOffTime == 0){
-      if(DEBUG_MODE == 1){
-        RED_ON;
-        BLUE_OFF;
-      }
-      HEAT_ON;
     }
   }else{
-    if(HeaterStatus == 0){
-      if(DEBUG_MODE == 1){
-        RED_ON;
-        BLUE_OFF;
-      }
-      HEAT_ON;
-      TIM14->ARR = HeaterOnTime;
-      HeaterStatus = 1;
-      CommForTempConv = 1;
-    }else{
-      if(DEBUG_MODE == 1){
-        RED_OFF;
-        BLUE_ON;
-      }
-      HEAT_OFF;
-      TIM14->ARR = HeaterOffTime;
-      HeaterStatus = 0;
-    }
+    HEAT_OFF;
   }
-  
   TIM_ClearFlag(TIM14, TIM_FLAG_Update);
 }
 
 
-extern char Blink;
+uint32_t the_time_1 = 0;
+uint32_t the_time_2 = 0;
+uint32_t the_time_3 = 0;
 char ButtonStatus = 0;
-void TIM16_IRQHandler(void){
-  static int SecCounter = 0;
+void TIM16_IRQHandler(void){ //1000 us
   static char ButtonCounter = 0;
   if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3) == 0){
     //button pressed
@@ -66,10 +52,9 @@ void TIM16_IRQHandler(void){
     ButtonCounter = 0;
     ButtonStatus = 0;
   }
-  if(SecCounter == SEC_CONST){
-    SecCounter = 0;
-    if(Blink == 0) Blink = 1; else Blink = 0;
-  }else SecCounter++;
+  the_time_1++;
+  the_time_2++;
+  the_time_3++;
   TIM_ClearFlag(TIM16, TIM_FLAG_Update);
 }
 

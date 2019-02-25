@@ -2161,6 +2161,9 @@
     </file>
   </group>
   <file>
+    <name>$PROJ_DIR$\flash.c</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\interrupts.c</name>
   </file>
   <file>

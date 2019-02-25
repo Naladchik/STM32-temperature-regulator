@@ -3,13 +3,6 @@
 #include "config.h"
 
 unsigned char wire_buffer[9]; //1-wire read buffer
-//double TempSetpoint = 39.0; //setpoint temperature in Celsium degree
-unsigned int TempSPValue; //setpoint in 0.0625 parts of Celsium degree
-unsigned int TempActValue; //setpoint in 0.0625 parts of Celsium degree
-unsigned int HeatRatio = 10; // ratio to HEAT_CYCLE
-double e = 0; //difference for PID controller
-double PID_buf;
-unsigned char TimeCounter = 0;
 unsigned int TIM14_period;
 
 GPIO_InitTypeDef GPIO_InitStruct;
@@ -260,26 +253,6 @@ unsigned char ReadByte(void){
   return(b);
 }
 
-
-//void Delay_us(unsigned int us){
-//  if(us>0){
-//    TIM3_TimeBaseInitStruct.TIM_Period = us;
-//    TIM_SetCounter(TIM3, us);
-//    TIM_TimeBaseInit(TIM3,&TIM3_TimeBaseInitStruct);
-//    TIM_ClearFlag(TIM3, TIM_FLAG_Update);
-//    for(unsigned int i = 0; i < us; i++){
-//      if(TIM_GetFlagStatus(TIM3, TIM_FLAG_Update) == SET)break;
-//      for(char j = 0; j < 100; j++){
-//        if(TIM_GetFlagStatus(TIM3, TIM_FLAG_Update) == SET)break;
-//        asm("NOP");
-//        asm("NOP");
-//        asm("NOP");
-//      }
-//    }
-//  }  
-//}
-
-
 void Delay_us(unsigned int us){
   if(us>0){
     TIM3_TimeBaseInitStruct.TIM_Period = us;
@@ -322,7 +295,7 @@ unsigned int GetRawTemperature(void){
     temp <<= 8;
     temp |= wire_buffer[0];
   }else{
-    temp = 0x07D0;
+    temp = 0xffff;
   }
   TIM_ITConfig(TIM16,TIM_IT_Update,ENABLE);
   TIM_ITConfig(TIM17,TIM_IT_Update,ENABLE);
