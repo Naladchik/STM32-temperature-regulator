@@ -91,7 +91,7 @@ void Timers_Init(void){
   TIM_DeInit(TIM16);
   TIM16_TimeBaseInitStruct.TIM_Prescaler = TIM16PRESCALER; //479+1 division to obtain 10 us
   TIM16_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Down;
-  TIM16_TimeBaseInitStruct.TIM_Period = BUTTON_TIME;
+  TIM16_TimeBaseInitStruct.TIM_Period = BUTTON_PERIOD;
   TIM16_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV2;
   TIM_TimeBaseInit(TIM16,&TIM16_TimeBaseInitStruct);
   TIM_Cmd(TIM16, ENABLE);
@@ -154,14 +154,6 @@ unsigned int readADC1(unsigned int channel){
     }
   return ADC_GetConversionValue(ADC1);
 }
-
-
-
-unsigned char Button(void){
-  extern char ButtonStatus;
-  return(ButtonStatus);
-}
-
 
 void OneWireInput(void){
   GPIO_1wire_InitStruct.GPIO_Pin = GPIO_Pin_12;
@@ -261,13 +253,6 @@ void Delay_us(unsigned int us){
     while(TIM_GetFlagStatus(TIM3, TIM_FLAG_Update) == RESET){}
   }
 }
-
-void Delay_ms(unsigned int ms){
-  for(unsigned int i = 0; i < ms; i++){
-    Delay_us(1000);
-  }
-}
-
 
 void StartConvertion(void){
   TIM_ITConfig(TIM16,TIM_IT_Update,DISABLE);

@@ -1,83 +1,70 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx.h"
 #include "config.h"
+#include "types.h"
 #include "periphery.h"
 #include "workflow.h"
 #include "PIcontrol.h"
+#include "flash.h"
 #include <stdio.h>
 #include <string.h> // memcpy
 #include <stdlib.h> //realloc
 
-extern char CommForPIcontrol;
-extern char CommForTempConv;
-extern char PreHeat;
+FlagsTypeDef    Flags;
+TempTypeDef     Temp;
+PowerTypeDef    Power;
+ButtonTypeDef   Button;
+TimersTypeDef   Timers;
+VoltagesTypeDef Voltages;
 
-extern int RawTemp;
-extern float eTemp;
-extern char TempSetpoint;
-float ActualTemperature;
-float SetTemperature;
+uint16_t    FLASH_STORAGE; //0x00 child-0ff, 0x10 child-on, 0x01 adult-off, 0x11 adult-on
 
-uint8_t RGB_status = 0;
-
-char OldButtonState = 0;
-char CurrentButtonState = 0;
-uint16_t ERROR_REG = 0;
-
-uint8_t OnOffStatus = 1;
+RGB_TypeDef RGB_STATE;
+RGB_TypeDef RGB_OFF;
 
 int main(void){
   IO_Init();
   Timers_Init();
-  Analog_Init();
-  SetPower(0.00);
-  SetTemperature = (float)TempSetpoint;
+  Analog_Init();  
+  ZeroSetPower(&Power);  
+  InitFlags(&Flags);
+  InitTemp(&Temp);
+  InitTimers(&Timers);
+  RGB_STATE = RGB_off;
+  InitButton(&Button);
+  MakeAllRight(&FLASH_STORAGE, &Flags, &Temp);
+  StartConvertion();
+  Flags.Buzzer = ENABLE;
+  WaitUntil(&Timers, SYSTEM_READY);
+  Flags.Buzzer = DISABLE;
   while(1){
-    if(OnOffStatus == 1){
+    if(Flags.DeviceOn){
       //POWERED ON SECTION
-      //Temperature acquire every 1 sec
-      if(CommForTempConv != 0){
-        RawTemp = GetRawTemperature();
-        ActualTemperature = (float)RawTemp * TEMP_RESOLITION;        
-        eTemp = SetTemperature - ActualTemperature;
-        StartConvertion();
-        CommForPIcontrol = 1;
-        CommForTempConv = 0;
-      }      
-      if(CommForPIcontrol != 0){
-        UpdatePower();        
-        CommForPIcontrol = 0;
-        if(RGB_status == RGB_RED){
-          if((SetTemperature - ActualTemperature) < 0.5) RGB_status = RGB_WHITE;
-          RED_ON;
-          GREEN_OFF;
-          BLUE_OFF;
-        }else{
-          if(RGB_status == RGB_WHITE){
-            if((SetTemperature - ActualTemperature) > 1.0) RGB_status = RGB_RED;
-            RED_ON;
-            GREEN_ON;
-            BLUE_ON;
-          }else{}        
-        }
+      if(Flags.AcquireTemperature){
+        //Temperature acquire every 1 sec
+        ExecuteTemp(&Temp);
+        if(Temp.Actual >= DANGER_TEMP) Flags.ErrorOverheating = ENABLE;
+        //PI control      
+        CalcPower(&Power, &Temp);
+        SetPower(&Power);
+        //LEDs
+        TemperatureToRGB(&Temp, &RGB_STATE);
+        RGB_Control(&RGB_STATE);
+        if(!Button.InUse)ShowTempLED_Bar(&Temp);
+        GetVoltages(&Voltages);
+        Flags.AcquireTemperature = DISABLE;      
       }
-     // LEDsControl(bbb);
-      
+      if(Button.ChangeTemp)LED_One((uint8_t)(Flags.SetTemp - MIN_TEMP) + 1);
     }else{
       //POWERED OFF SECTION
-      
-      
-    }
-    
-    //BUTTON CONTROL
-    if(CurrentButtonState != 0){
-      //Button pressed
-      if(OldButtonState == 0){
-        //Button pressed and released
-        
-      }
-    }
-    OldButtonState = CurrentButtonState;
+      ZeroSetPower(&Power);
+      RGB_Control(RGB_off);
+      LED_BarOff();
+      Flags.Buzzer = DISABLE;
+    }    
+    ButtonProcess(&Button, &Flags, &Temp);
+    CheckErrors(&Flags);
+    if(Flags.Heater) RGB_Control(&RGB_STATE); else RGB_Control(&RGB_OFF);
   }
 }
 

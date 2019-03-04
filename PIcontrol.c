@@ -2,24 +2,16 @@
 #include "periphery.h"
 #include "workflow.h"
 #include "config.h"
+#include "types.h"
 
 extern uint8_t RGB_status;
-char CommForPIcontrol = 0;
-float CurrentPower = 0.0; //Current power from 0.0 to 1.0
-//Source temperatures
-char TempSetpoint = DEFAULT_TEMP;
-int RawTemp;
-float eTemp;
-float Integral = 0;
-unsigned int StartCounter = 0;
-char PreHeat = 1;
+extern PowerTypeDef    Power;
 
-void UpdatePower(void){
-  if(StartCounter >= WAKE_UP){
-    if(RGB_status == 0)RGB_status = RGB_RED;
-    if((CurrentPower < 1.0) && (CurrentPower > 0.0)) Integral += eTemp;    
-    CurrentPower = K_PID * (eTemp + Integral/TI_PID);    
-    SetPower(CurrentPower);
-  }
-  if(StartCounter < HOUR) StartCounter++;
+unsigned int StartCounter = 0;
+
+extern TempTypeDef     Temp;
+
+void CalcPower(PowerTypeDef* pw, TempTypeDef* tm){
+  pw->Current = K_PID * (Temp.e + tm->Integral/TI_PID);
+  if((pw->Current < 1.0) && (pw->Current > 0.0)) tm->Integral += Temp.e;  
 }

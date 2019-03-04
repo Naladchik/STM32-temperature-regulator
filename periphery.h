@@ -48,7 +48,7 @@
 void IO_Init(void);
 void Timers_Init(void);
 void Analog_Init(void);
-unsigned int readADC1(unsigned int channel);
+
 //1-wire functions
 void OneWireRelease(void);
 void OneWirePull(void);
@@ -61,10 +61,8 @@ void StartConvertion(void);
 unsigned int GetRawTemperature(void);
 //Delay functions
 void Delay_us(unsigned int);
-void Delay_ms(unsigned int);
-//
-unsigned char Button(void);
+
 void BuzzerControl(char status);
-void OldLoop(void);
+unsigned int readADC1(unsigned int channel);
 
 #endif

@@ -1,12 +1,12 @@
-"D:\Alex\Projects\Humidifier\FIRMWARE\work\STM32F0xx_StdPeriph_Driver\src\stm32f0xx_spi.c"
+"D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\STM32F0xx_StdPeriph_Driver\src\stm32f0xx_spi.c"
 -std=c99
 -ferror-limit=100
 -I
-D:\Alex\Projects\Humidifier\FIRMWARE\work\CMSIS\ST\STM32F0xx\Include
+D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\CMSIS\ST\STM32F0xx\Include
 -I
-D:\Alex\Projects\Humidifier\FIRMWARE\work\STM32F0xx_StdPeriph_Driver\inc
+D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\STM32F0xx_StdPeriph_Driver\inc
 -I
-D:\Alex\Projects\Humidifier\FIRMWARE\work
+D:\Alex\Projects\Active\Humidifier\FIRMWARE\work
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\arm\CMSIS\Include
 -I
@@ -14,11 +14,11 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\arm\inc\c
 -I
-D:\Alex\Projects\Humidifier\FIRMWARE\work\CMSIS\ST\STM32F0xx\Include
+D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\CMSIS\ST\STM32F0xx\Include
 -I
-D:\Alex\Projects\Humidifier\FIRMWARE\work\STM32F0xx_StdPeriph_Driver\inc
+D:\Alex\Projects\Active\Humidifier\FIRMWARE\work\STM32F0xx_StdPeriph_Driver\inc
 -I
-D:\Alex\Projects\Humidifier\FIRMWARE\work
+D:\Alex\Projects\Active\Humidifier\FIRMWARE\work
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\arm\CMSIS\Include
 -DUSE_STDPERIPH_DRIVER=1

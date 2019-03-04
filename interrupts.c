@@ -1,73 +1,71 @@
 #include "stm32f0xx.h"
 #include "periphery.h"
 #include "config.h"
+#include "types.h"
 
-extern char HeaterStatus;
-extern unsigned int HeaterOnTime;
-extern unsigned int HeaterOffTime;
-extern uint16_t ERROR_REG;
-char CommForTempConv = 0;
-
-void TIM14_IRQHandler(void){ //Heater control
-  if((ERROR_REG & 0xff00) == 0){
-    if((HeaterOnTime == 0) || (HeaterOffTime == 0)){
-      CommForTempConv = 1;
+extern FlagsTypeDef    Flags;
+extern PowerTypeDef    Power;
+extern ButtonTypeDef   Button;
+void TIM14_IRQHandler(void){ //Heater control (1 sec cycle)
+  if(!Flags.ErrorGlobal){
+    if((Power.HeaterOnTime == 0) || (Power.HeaterOffTime == 0)){
+      Flags.AcquireTemperature = ENABLE;
       TIM14->ARR = HEAT_CYCLE;
-      if(HeaterOnTime == 0)HEAT_OFF;
-      if(HeaterOffTime == 0)HEAT_ON;
+      if(Power.HeaterOnTime == 0){HEAT_OFF; Flags.Heater = DISABLE;}
+      if(Power.HeaterOffTime == 0){HEAT_ON; Flags.Heater = ENABLE;}
     }else{
-      if(HeaterStatus == 0){
-        HEAT_ON;
-        TIM14->ARR = HeaterOnTime;
-        HeaterStatus = 1;
-        CommForTempConv = 1;
+      if(Power.HeaterStatus){
+        HEAT_OFF; Flags.Heater = DISABLE;
+        TIM14->ARR = Power.HeaterOffTime;
+        Power.HeaterStatus = DISABLE;
       }else{
-        HEAT_OFF;
-        TIM14->ARR = HeaterOffTime;
-        HeaterStatus = 0;
+        HEAT_ON; Flags.Heater = ENABLE;
+        TIM14->ARR = Power.HeaterOnTime;
+        Power.HeaterStatus = ENABLE;
+        Flags.AcquireTemperature = ENABLE;
+        
       }
     }
   }else{
-    HEAT_OFF;
+    HEAT_OFF; Flags.Heater = DISABLE;
   }
   TIM_ClearFlag(TIM14, TIM_FLAG_Update);
 }
 
-
-uint32_t the_time_1 = 0;
-uint32_t the_time_2 = 0;
-uint32_t the_time_3 = 0;
-char ButtonStatus = 0;
-void TIM16_IRQHandler(void){ //1000 us
-  static char ButtonCounter = 0;
+extern TimersTypeDef Timers;
+extern ButtonTypeDef Button;
+void TIM16_IRQHandler(void){ //Button control (1000 us)
   if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3) == 0){
     //button pressed
-    if(ButtonCounter == JITTER){
-      ButtonStatus = 1;
+    if(Button.JitterTimer >= JITTER){
+      Button.PressedNow = ENABLE;
+      if(Button.PressTimer < MINUTE)Button.PressTimer++;
+      Button.ActivityTimer = 0;
     }else{
-      ButtonCounter++;
+      Button.JitterTimer++;
     }
   }else{
     //button released
-    ButtonCounter = 0;
-    ButtonStatus = 0;
+    Button.JitterTimer = 0;
+    if(Button.ActivityTimer < MINUTE)Button.ActivityTimer++;
+    Button.PressedNow = DISABLE;
   }
-  the_time_1++;
-  the_time_2++;
-  the_time_3++;
+  Timers.FromStart++;
+  if(Timers.FromStart == MINUTE) Timers.FromStart = 0;
   TIM_ClearFlag(TIM16, TIM_FLAG_Update);
 }
 
 
-char BuzzerOnOff = 0;
-void TIM17_IRQHandler(void){
-  static char BuzzerStatus = 0; 
-  if(BuzzerStatus == 0){
-    if(BuzzerOnOff != 0) BUZZ_ON;
-    BuzzerStatus = 1;
+void TIM17_IRQHandler(void){ // Buzzer control
+  static uint8_t BuzzerState = 0; 
+  if(BuzzerState == 0){
+    if(Flags.Buzzer) BUZZ_ON;
+    BuzzerState = 1;
   }else{
     BUZZ_OFF;
-    BuzzerStatus = 0;    
-  }  
+    BuzzerState = 0;    
+  }
+  if(Flags.BeepCounter > 0) Flags.BeepCounter--;
+  if(Flags.BeepCounter == 1) Flags.Buzzer = DISABLE;
   TIM_ClearFlag(TIM17, TIM_FLAG_Update);
 }
