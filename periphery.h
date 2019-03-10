@@ -1,6 +1,7 @@
 #ifndef PERIPHERY
 #define PERIPHERY
 
+//#define HEAT_ON          GPIO_ResetBits(GPIOA, GPIO_Pin_7);
 #define HEAT_ON          GPIO_SetBits(GPIOA, GPIO_Pin_7);
 #define HEAT_OFF         GPIO_ResetBits(GPIOA, GPIO_Pin_7);
 

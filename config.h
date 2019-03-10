@@ -21,7 +21,7 @@
 #define HEAT_CYCLE        10000
 #define TIM14PRESCALER    4779
 
-#define JITTER            5
+#define JITTER            10
 #define TIM16PRESCALER    479
 #define BUTTON_PERIOD     100
 #define LONG_PRESS        1000
@@ -33,6 +33,7 @@
 
 #define BUTTON_SPEED      200
 #define BAR_PERIOD        (uint16_t)200
+#define ON_OFF_LIMIT      (BAR_PERIOD * TEMP_RANGE)
 
 #define F_ADDRESS_1       (uint32_t)0x08007C00
 

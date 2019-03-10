@@ -46,8 +46,8 @@ void DefaultStorage(uint16_t* storage){
 }
 
 void ExtractFromStorage(uint16_t* storage, FlagsTypeDef* fl, TempTypeDef* tm){
-  if((*storage && 0x1000) == 0)fl->DeviceOn = DISABLE; else fl->DeviceOn = ENABLE;
-  if((*storage && 0x0100) == 0)fl->AdultMode = DISABLE; else fl->AdultMode = ENABLE;
+  if((*storage & 0x1000) == 0)fl->DeviceOn = DISABLE; else fl->DeviceOn = ENABLE;
+  if((*storage & 0x0100) == 0)fl->AdultMode = DISABLE; else fl->AdultMode = ENABLE;
   tm->Target = (float)(*storage & 0x00ff);  
 }
 

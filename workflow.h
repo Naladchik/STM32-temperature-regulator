@@ -13,6 +13,7 @@ void ShowTempLED_Bar(TempTypeDef* tm);
 void RGB_Control(RGB_TypeDef* rgb);
 void TemperatureToRGB(TempTypeDef* tm, RGB_TypeDef* rgb);
 void ButtonProcess(ButtonTypeDef* bt, FlagsTypeDef* fl, TempTypeDef* tm);
+void ButtonClearError(ButtonTypeDef* bt, FlagsTypeDef* fl, TempTypeDef* tm);
 void WaitUntil(TimersTypeDef* tmrs, uint16_t limit);
 void CheckErrors(FlagsTypeDef* err);
 

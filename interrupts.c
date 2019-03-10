@@ -6,6 +6,7 @@
 extern FlagsTypeDef    Flags;
 extern PowerTypeDef    Power;
 extern ButtonTypeDef   Button;
+extern TimersTypeDef   Timers;
 void TIM14_IRQHandler(void){ //Heater control (1 sec cycle)
   if(!Flags.ErrorGlobal){
     if((Power.HeaterOnTime == 0) || (Power.HeaterOffTime == 0)){
@@ -22,12 +23,12 @@ void TIM14_IRQHandler(void){ //Heater control (1 sec cycle)
         HEAT_ON; Flags.Heater = ENABLE;
         TIM14->ARR = Power.HeaterOnTime;
         Power.HeaterStatus = ENABLE;
-        Flags.AcquireTemperature = ENABLE;
-        
+        Flags.AcquireTemperature = ENABLE;        
       }
     }
   }else{
     HEAT_OFF; Flags.Heater = DISABLE;
+    if(Timers.Show)Timers.Show = DISABLE; else Timers.Show = ENABLE;
   }
   TIM_ClearFlag(TIM14, TIM_FLAG_Update);
 }
@@ -40,14 +41,15 @@ void TIM16_IRQHandler(void){ //Button control (1000 us)
     if(Button.JitterTimer >= JITTER){
       Button.PressedNow = ENABLE;
       if(Button.PressTimer < MINUTE)Button.PressTimer++;
-      Button.ActivityTimer = 0;
+      Button.ReleaseTimer = 0;
     }else{
       Button.JitterTimer++;
     }
   }else{
     //button released
     Button.JitterTimer = 0;
-    if(Button.ActivityTimer < MINUTE)Button.ActivityTimer++;
+    if(Button.ReleaseTimer < MINUTE)Button.ReleaseTimer++;
+    Button.PressTimer = 0;
     Button.PressedNow = DISABLE;
   }
   Timers.FromStart++;

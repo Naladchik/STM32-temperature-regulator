@@ -46,24 +46,48 @@ int main(void){
         if(Temp.Actual >= DANGER_TEMP) Flags.ErrorOverheating = ENABLE;
         //PI control      
         CalcPower(&Power, &Temp);
+        Power.Current = 1.0;
         SetPower(&Power);
         //LEDs
         TemperatureToRGB(&Temp, &RGB_STATE);
-        RGB_Control(&RGB_STATE);
+        //RGB_Control(&RGB_STATE);
         if(!Button.InUse)ShowTempLED_Bar(&Temp);
         GetVoltages(&Voltages);
         Flags.AcquireTemperature = DISABLE;      
       }
       if(Button.ChangeTemp)LED_One((uint8_t)(Flags.SetTemp - MIN_TEMP) + 1);
+      if(Button.ChangeAdult){
+        if(Flags.AdultMode)ShowLED_Bar(TEMP_RANGE); else ShowLED_Bar(TEMP_RANGE - (MAX_TEMP - MAX_TEMP_CHILD));
+      }
     }else{
       //POWERED OFF SECTION
       ZeroSetPower(&Power);
       RGB_Control(RGB_off);
-      LED_BarOff();
-      Flags.Buzzer = DISABLE;
     }    
-    ButtonProcess(&Button, &Flags, &Temp);
+    if(Flags.ErrorGlobal){
+      ButtonClearError(&Button, &Flags, &Temp);
+    }else{
+      ButtonProcess(&Button, &Flags, &Temp);
+    }
+    if(Flags.FlashStore){
+      PackToStorage(&Flags, &Temp, &FLASH_STORAGE);
+      StoreSettings(&FLASH_STORAGE);
+      Flags.FlashStore = DISABLE;
+    }
     CheckErrors(&Flags);
+    if(Flags.ErrorGlobal){
+      if(Timers.Show){
+        Flags.Buzzer = ENABLE;
+        for(uint8_t i = 1; i <=8; i++){
+          if(Flags.ErrorByte & 0x80)LED_Control(i, ENABLE); else LED_Control(i, DISABLE);
+          Flags.ErrorByte <<= 1;
+        }
+      }else{
+        Flags.Buzzer = DISABLE;
+        LED_BarOff();
+      }
+      
+    }
     if(Flags.Heater) RGB_Control(&RGB_STATE); else RGB_Control(&RGB_OFF);
   }
 }

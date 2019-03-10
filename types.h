@@ -11,13 +11,15 @@ typedef struct{
   uint8_t Buzzer:1;
   uint16_t BeepCounter;
   uint8_t Heater:1;
+  uint8_t FlashStore:1;
   uint8_t ErrorGlobal:1;
   uint8_t ErrorOverheating:1;
   uint8_t ErrorVoltageToHigh:1;
   uint8_t ErrorVoltageToLow:1;
   uint8_t Error_18b20:1;
   uint8_t ErrorSafetySensor:1;
-  uint8_t ErrorHeater:1;  
+  uint8_t ErrorHeater:1;
+  uint8_t ErrorByte;
 }FlagsTypeDef;
 
 //TEMP
@@ -40,6 +42,7 @@ typedef struct{
 //TIMERS
 typedef struct{
   uint16_t FromStart;
+  uint8_t Show:1;
 }TimersTypeDef;
 
 //RGB
@@ -51,15 +54,16 @@ typedef enum{
 
 //BUTTON
 typedef struct{
-  uint8_t InUse:1;
+  uint8_t InUse:1; //just casting Change<something> to main
   uint8_t ChangeTemp:1;
   uint8_t ChangeOnOff:1;
   uint8_t ChangeAdult:1;
   uint8_t PressedNow:1;
   uint8_t PressedWas:1;
   uint16_t JitterTimer;
-  uint16_t PressTimer;  
-  uint16_t ActivityTimer;
+  uint16_t PressTimer;  //Zeroed when button is released and incremented when pressed
+  uint16_t MaxPressTimer;
+  uint16_t ReleaseTimer; //Zeroed when button is pressed and incremented when released
 }ButtonTypeDef;
 
 //VOLTAGES
